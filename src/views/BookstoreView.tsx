@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ButtonAtom from '../components/ui/atoms/ButtonAtom';
 import ModalOrganism from '../components/ui/organisms/ModalOrganism';
 import { listBookstoreService } from '../services/bookstore.service';
 import { Bookstore } from '../types/bookstore.type';
@@ -20,13 +21,8 @@ const BookstoreView = () => {
   }, []);
 
   return (
-    <div className="h-screen grid place-content-center">
-      <button
-        className="bg-indigo-500 p-2 rounded-lg text-white font-bold"
-        onClick={() => setIsOpen(true)}
-      >
-        Add
-      </button>
+    <article>
+      <ButtonAtom buttonName="Add" onClick={() => setIsOpen(true)} />
       <div className="grid grid__fluid__3">
         {bookstore.length === 0 ? (
           <p>No content</p>
@@ -52,7 +48,7 @@ const BookstoreView = () => {
       {isOpen && (
         <ModalOrganism book={book} setIsOpen={setIsOpen} setBook={setBook} />
       )}
-    </div>
+    </article>
   );
 };
 
