@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ButtonAtom from '../components/ui/atoms/ButtonAtom';
+import FormMolecule from '../components/ui/molecules/FormMolecule';
 import ModalOrganism from '../components/ui/organisms/ModalOrganism';
 import { listBookstoreService } from '../services/bookstore.service';
 import { Bookstore } from '../types/bookstore.type';
@@ -46,7 +47,9 @@ const BookstoreView = () => {
         )}
       </div>
       {isOpen && (
-        <ModalOrganism book={book} setIsOpen={setIsOpen} setBook={setBook} />
+        <ModalOrganism setIsOpen={setIsOpen} setData={setBook}>
+          <FormMolecule book={book} />
+        </ModalOrganism>
       )}
     </article>
   );
