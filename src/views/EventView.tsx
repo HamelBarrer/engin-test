@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AlertErrorAtom from '../components/ui/atoms/AlertErrorAtom';
 import ButtonAtom from '../components/ui/atoms/ButtonAtom';
 import FormEventMolecule from '../components/ui/molecules/FormEventMolecule';
 import ModalOrganism from '../components/ui/organisms/ModalOrganism';
@@ -9,6 +10,8 @@ const EventView = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [events, setEvents] = useState<EventLog[]>([]);
   const [event, setEvent] = useState<EventLog>();
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleClick = (data: EventLog) => {
     console.log('aqui');
@@ -19,11 +22,22 @@ const EventView = () => {
   useEffect(() => {
     listEventService()
       .then((res) => setEvents(res))
-      .catch(() => setEvents([]));
+      .catch((error) => {
+        setEvents([]);
+        const err = error as Error;
+        setIsError(true);
+        setErrorMessage(err.message);
+
+        setTimeout(() => {
+          setIsError(false);
+          setErrorMessage('');
+        }, 5000);
+      });
   }, []);
 
   return (
     <section>
+      {isError && <AlertErrorAtom message={errorMessage} />}
       <ButtonAtom buttonName="Add" onClick={() => setIsOpen(true)} />
       <div className="grid grid__fluid__3">
         {events.length === 0 ? (

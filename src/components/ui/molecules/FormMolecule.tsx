@@ -4,6 +4,7 @@ import {
   updateBookstoreService,
 } from '../../../services/bookstore.service';
 import { Bookstore } from '../../../types/bookstore.type';
+import ButtonAtom from '../atoms/ButtonAtom';
 import InputAtom from '../atoms/InputAtom';
 import LabelAtom from '../atoms/LabelAtom';
 
@@ -30,10 +31,10 @@ const FormMolecule = ({ book }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (title === '') {
-      await createBookstoreService(formData);
+    if (book?.id) {
+      await updateBookstoreService(book.id, formData);
     } else {
-      await updateBookstoreService(book!.id!, formData);
+      await createBookstoreService(formData);
     }
   };
 
@@ -51,12 +52,7 @@ const FormMolecule = ({ book }: Props) => {
       <LabelAtom labelName="stock">
         <InputAtom name="stock" value={stock} onChange={handleChange} />
       </LabelAtom>
-      <button
-        type="submit"
-        className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
-      >
-        Deactivate
-      </button>
+      <ButtonAtom type="submit" buttonName="Save" />
     </form>
   );
 };
