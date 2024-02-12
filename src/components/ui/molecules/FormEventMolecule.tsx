@@ -37,7 +37,6 @@ export default function FormEventMolecule({ event }: Props) {
     e.preventDefault();
 
     if (event?.id) {
-      console.log({ event });
       await updateEventService(event.id, formData);
     } else {
       await createEventService(formData);

@@ -14,7 +14,6 @@ const EventView = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleClick = (data: EventLog) => {
-    console.log('aqui');
     setIsOpen(true);
     setEvent(data);
   };
